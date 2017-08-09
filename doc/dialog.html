@@ -1,0 +1,198 @@
+<div id="growing-circle-container" class="growing-content-section growing-collapsed" style="display:none;">
+    <div id="growing-circle-header" class="growing-circle-header">
+        <div style="float:left">
+            <div class="tips">
+                <i>?</i>
+                <span>
+        <span>圈选功能使用可视化方式采集数据.</span>
+                <span>页面：表示统计这个元素在某个页面或者页面组的数据，在下拉列表中选择已定义的页面。</span>
+                <span>圈选：根据业务需要，选择你希望统计的数据。</span>
+                <span>图中显示过去7天及今天的浏览量、点击量。</span>
+                <span>点击保存后即可在单图、漏斗、留存等分析模块中使用。</span>
+                <span>了解更多，请参考 <a href="javascript:void(0)">帮助文档。</a></span>
+                </span>
+            </div>
+            <div class="growing-circle-header-tips-board"></div>
+            <!-- <span id="growing-reset-button" class="growing-button">《 切换至元素当前状态</span> -->
+        </div>
+        <p><span class='tag-scope'></span></p>
+        <div style="float: right" id="growing-collapse-button">
+            <span class="header-info" style="font-size:12px !important">自动模式</span>
+        </div>
+    </div>
+    <div class="growing-circle-form">
+        <div class="growing-tag-info">
+            <form class="growing-form-horizontal">
+                <div id="growing-row-title" class="growing-form-group">
+                    <label for="tagTitle" class="growing-col-2 growing-control-label">名称</label>
+                    <div class="growing-col-10">
+                        <input id="growing-tag-title" type="text" class="growing-form-control with-placeholder" />
+                        <span class="error-text"></span>
+                    </div>
+                </div>
+                <div class="growing-form-group" id="growing-form-group-page-select">
+                    <label for="tagPage" class="growing-col-2 growing-control-label">页面</label>
+                    <div class="growing-col-10 growing-select-control">
+                        <span class="current-page"></span>
+                        <div id="page-tag-options" class="with-toggle">
+                        </div>
+                    </div>
+                    <span class="query-info-text">此页面包含查询条件，需保存后才开始计数。</span>
+                </div>
+                <div class="growing-form-group" id="growing-form-group-filter-combination">
+                    <label for="filterContent" class="growing-col-2 growing-control-label">圈选</label>
+                    <div class="growing-col-10">
+                        <div class="filter-container">
+                            <div class="button-group"></div>
+                            <div class="filter-detail">
+                                <ul>
+                                    <li field="content" class="selected">
+                                        <input type="checkbox" checked="">
+                                        <span>
+                                            限制文本
+                                            <div class="tips"><i>?</i><span>勾选该项后，只统计文本为 “供应” 的数据，文本不同将不统计。</span></div>
+                                        </span>
+                                        <input type="text" v="供应" title="供应" value="供应">
+                                    </li>
+                                    <li field="index" class="">
+                                        <input type="checkbox">
+                                        <span>
+                                            限制位置
+                                            <div class="tips"><i>?</i><span><strong>位置</strong> 是指当前元素在一组同类元素中的位置，勾选该项后，只统计位于第1的数据。</span></div>
+                                        </span>
+                                        <input type="text" v="1" title="第1位" value="第1位">
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--
+  <div class="growing-form-group">
+    <label for="tagContent" class="growing-col-2 growing-control-label">文本</label>
+    <div class="growing-col-10">
+      <input id="growing-tag-content" type="text" class="growing-form-control with-toggle" placeholder="事件内容">
+      <div class="growing-col-toggle">
+  <input type="checkbox" id="chooseContent">
+  <div class="growing-toggle growing-on">
+    <label class="growing-toggle-bg"></label>
+    <span class="growing-toggle-handle"></span>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="growing-form-group" id="growing-row-href">
+    <label for="tagHref" class="growing-col-2 growing-control-label">链接</label>
+    <div class="growing-col-10">
+      <input id="growing-tag-href" type="text" class="growing-form-control with-toggle" placeholder="跳转链接">
+      <div class="growing-col-toggle">
+  <input type="checkbox" id="chooseHref">
+  <div class="growing-toggle ">
+    <label class="growing-toggle-bg"></label>
+    <span class="growing-toggle-handle"></span>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+  <div class="growing-form-group" id="growing-row-index">
+    <label for="tagIndex" class="growing-col-2 growing-control-label">位置</label>
+    <div class="growing-col-10" style="padding-top:3px">
+      <span id="growing-tag-index" style="padding-left:12px;line-height:20px"></span>
+      <div class="growing-col-toggle">
+  <input type="checkbox" id="chooseIndex">
+  <div class="growing-toggle ">
+    <label class="growing-toggle-bg"></label>
+    <span class="growing-toggle-handle"></span>
+  </div>
+</div>
+
+    </div>
+  </div>
+  -->
+                <!--
+  <div class="growing-form-group" id="growing-row-comment">
+    <label for="tagComment" class="growing-col-2 growing-control-label">注释</label>
+    <div class="growing-col-10">
+      <textarea id="growing-tag-comment" class="growing-form-control" placeholder="输入更多注释帮助理解"></textarea>
+    </div>
+  </div>
+
+  <div class="growing-form-group" id="growing-version-container">
+    <label class="growing-col-2"></label>
+    <div class="growing-col-10">
+      版本 <span class="growing-version-id"></span> ：
+      <span class="growing-updater-by"></span>
+      修改于 <span class="growing-updated-at"></span>
+    </div>
+  </div>
+  -->
+                <div class="growing-form-group growing-screenshot-container">
+                    <label for="screenshot" class="growing-col-2 growing-control-label">截图</label>
+                    <div class="growing-col-10 growing-screenshot">
+                        <div class="growing-screenshot-loading">
+                            <div class="bounce1"></div>
+                            <div class="bounce2"></div>
+                            <div class="bounce3"></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="growing-form-group" style="text-align:center;display:none;">
+                <i id="growing-expand-icon" class="fa" style="font-size:24px !important"></i>
+            </div>
+            <div class="growing-chart-container">
+                <div class="growing-mode-switcher growing-clearfix">
+                    <div id="growing-line-action" mode="line" class="growing-switch growing-active">线图</div>
+                    <div id="growing-bar-action" mode="bar" class="growing-switch">柱图</div>
+                </div>
+                <i class="gra rtTrigger" style="float:right;font-size:21px !important;margin-left:.3em;color:#b3b3b3"></i>
+                <div class="query-info-text">此数据未根据页面的查询条件过滤。</div>
+                <div id="growing-rt-chart">
+                </div>
+            </div>
+        </div>
+        <div class="growing-more-info">
+            <div id="growing-more-actions">
+                <!-- <label>元素选项</label> -->
+                <!-- <label style="margin-left:28px"> -->
+                <!--   <span id="growing-choose-similar">&radic;</span> -->
+                <!--   选取同类 -->
+                <!--   <span style="border:1px solid #2F7DDD;border-radius:12px;width:12px;background-color:#18AC9D;color:#fff;padding:0px 4px;">?</span> -->
+                <!-- </label> -->
+                <!-- <label>模式切换</label> -->
+                <div class="growing-pattern-switcher">
+                    <div class="growing-circle-mode-switcher growing-switch growing-active" data-xpath-mode="auto">自动模式</div>
+                    <div class="growing-circle-mode-switcher growing-switch" data-xpath-mode="manual">手动模式</div>
+                </div>
+            </div>
+            <div id="growing-xpath-section">
+                <!-- <label>容器选择</label> -->
+                <div class="growing-xpath-container">
+                    <div class="growing-xpath-content">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="growing-circle-footer">
+        <div class="growing-reminder">
+        </div>
+        <div id="growing-audit-info">
+        </div>
+        <div id="growing-circle-form-buttons">
+            <div style="float:left">
+                <button id="growing-save">保存</button>
+            </div>
+            <div style="float:left">
+                <button id="growing-save-as" style="background-color:#2F7DDD;margin-left:5px">另存为</button>
+            </div>
+            <div style="float:right">
+                <button id="growing-cancel">取消</button>
+            </div>
+        </div>
+    </div>
+</div>

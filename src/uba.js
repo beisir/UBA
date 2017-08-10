@@ -41,10 +41,10 @@
      * 
      * 例如：http://dxcrm.inc.hc360.com/memberReg.htm?resCode=201408161853439668368&token=TEhENEU5QUhYR1pEVDkxTzFPMzg=&sourcetypeid=18&type=0   ]
      */
-    var _host = window.location.host;
-    if (_host === 'dxcrm.inc.hc360.com') {
-        return;
-    }
+    // var _host = window.location.host;
+    // if (_host === 'dxcrm.inc.hc360.com') {
+    //     return;
+    // }
 
     /**
      * [防止重复初始化]

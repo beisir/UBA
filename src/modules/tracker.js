@@ -296,61 +296,61 @@ tracker.prototype.sendPageView = function() {
  * @return {[type]} [description]
  */
 tracker.prototype.loadCirclePlugin = function() {
-    // var _this = this,
-    //     _promiseJS,
-    //     _promiseCSS;
+    var _this = this,
+        _promiseJS,
+        _promiseCSS;
 
-    // /**
-    //  * [若当前圈选对象实例不存在]
-    //  */
-    // if (!_this.circleHandlerEntity) {
+    /**
+     * [若当前圈选对象实例不存在]
+     */
+    if (!_this.circleHandlerEntity) {
 
-    //     /**
-    //      * [_promiseJS 创建延迟对象]
-    //      */
-    //     _promiseJS = new promise(function(resolve, reject) {
+        /**
+         * [_promiseJS 创建延迟对象]
+         */
+        _promiseJS = new promise(function(resolve, reject) {
 
-    //         /**
-    //          * [异步加载圈选插件]
-    //          */
-    //         require.ensure([], function(require) {
-    //             resolve(require('../plugins/circle'));
-    //         }, 'plugin.circle');
-    //     });
+            /**
+             * [异步加载圈选插件]
+             */
+            require.ensure([], function(require) {
+                resolve(require('../plugins/circle'));
+            }, 'plugin.circle');
+        });
 
-    //     /**
-    //      * [_promiseCSS 创建延迟对象]
-    //      */
-    //     _promiseCSS = new promise(function(resolve, reject) {
+        /**
+         * [_promiseCSS 创建延迟对象]
+         */
+        _promiseCSS = new promise(function(resolve, reject) {
 
-    //         /**
-    //          * [异步加载圈选插件]
-    //          */
-    //         require.ensure([], function(require) {
-    //             resolve(require('../plugins/circle.css'));
-    //         }, 'plugin.circle.style');
-    //     });
+            /**
+             * [异步加载圈选插件]
+             */
+            require.ensure([], function(require) {
+                resolve(require('../plugins/circle.css'));
+            }, 'plugin.circle.style');
+        });
 
-    //     /**
-    //      * [加载完圈选脚本和样式完成后通知框架页圈选功能加载完毕]
-    //      */
-    //     promise.all([_promiseJS, _promiseCSS]).then(function(_tempModules) {
-    //         var _circleModule = _tempModules[0];
+        /**
+         * [加载完圈选脚本和样式完成后通知框架页圈选功能加载完毕]
+         */
+        promise.all([_promiseJS, _promiseCSS]).then(function(_tempModules) {
+            var _circleModule = _tempModules[0];
 
-    //         /**
-    //          * [circleHandlerEntity 初始化圈选插件实例]
-    //          * @type {circleModule}
-    //          */
-    //         _this.circleHandlerEntity = new _circleModule(_this);
+            /**
+             * [circleHandlerEntity 初始化圈选插件实例]
+             * @type {circleModule}
+             */
+            _this.circleHandlerEntity = new _circleModule(_this);
 
-    //         /**
-    //          * 通知父框架页圈选组件加载完成
-    //          */
-    //         _this.pageEntity.postMessage({
-    //             action: 'loadCirclePluginComplete'
-    //         });
-    //     });
-    // }
+            /**
+             * 通知父框架页圈选组件加载完成
+             */
+            _this.pageEntity.postMessage({
+                action: 'loadCirclePluginComplete'
+            });
+        });
+    }
 };
 
 /**

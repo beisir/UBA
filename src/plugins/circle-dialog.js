@@ -59,7 +59,7 @@ var _htmlArray = ['<div id="uba-circle-container" class="uba-content-section uba
     '    <div class="uba-circle-footer">',
     '        <div id="uba-circle-form-buttons">',
     '            <div style="float:left">',
-    // '                <button id="uba-save">保存</button>',
+    '                <button id="uba-save">另存为</button>',
     '            </div>',
     '            <div style="float:right">',
     '                <button id="uba-cancel">取消</button>',
@@ -242,6 +242,12 @@ circleDialog.prototype.buildDOM = function() {
         btnClose: util.global.document.getElementById('uba-cancel'),
 
         /**
+         * [save 获取另存为按钮]
+         * @type {[type]}
+         */
+        btnSave: util.global.document.getElementById('uba-save'),
+
+        /**
          * [txtTitle 标题输入框]
          * @type {[type]}
          */
@@ -383,7 +389,7 @@ circleDialog.prototype.update = function() {
 circleDialog.prototype.getDataPromise = function(data) {
     var _this = this,
         _xhr,
-        _data,
+        _data = data,
         _promise;
 
     /**
@@ -463,6 +469,8 @@ circleDialog.prototype.bindEvents = function() {
          * 派发弹出框关闭事件
          */
         _this.__dispatchEvent('onClose');
+    });
+    util.bind(_this.btnSave, 'click', function() {
     });
 
     /**

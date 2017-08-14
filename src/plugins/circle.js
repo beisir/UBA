@@ -40,8 +40,9 @@ function circle(trackerEntity) {
         /**
          * 初始化弹出框对象实例
          */
-        circleDialogEntity: new circleDialog()
-
+        circleDialogEntity: new circleDialog({
+            trackerEntity: trackerEntity
+        })
     });
 
     /**
@@ -56,7 +57,7 @@ function circle(trackerEntity) {
      * [监听弹出框关闭事件]
      */
     _this.circleDialogEntity.addEventListener('onClose', function() {
-        
+
         /**
          * 移除点击元素样式
          */
@@ -315,21 +316,29 @@ circle.prototype.elementClickHandler = function(event) {
     _this.clickOn(_target);
 
     /**
-     * [_targetData 获取元素属性]
-     * @type {[type]}
+     * [当前元素为可圈选元素时才弹出对话框]
      */
-    _targetData = _this.trackerEntity.pageEntity.getElementPath(_target, true);
+    if (_this.circleable(_target)) {
 
-    /**
-     * 展示弹出框
-     */
-    _this.circleDialogEntity.render({
-        element: _target,
-        xpath: _targetData.xpath,
-        text: _this.trackerEntity.pageEntity.getElementContent(_target),
-        index: _targetData.idx || _this.trackerEntity.pageEntity.getElementIndex(_target, _targetData.xpath),
-        event: _evt
-    });
+        /**
+         * [_targetData 获取元素属性]
+         * @type {[type]}
+         */
+        _targetData = _this.trackerEntity.pageEntity.getElementPath(_target, true);
+
+        /**
+         * 展示弹出框
+         */
+        _this.circleDialogEntity.render({
+            element: _target,
+            xpath: _targetData.xpath,
+            text: _this.trackerEntity.pageEntity.getElementContent(_target),
+            index: _targetData.idx || _this.trackerEntity.pageEntity.getElementIndex(_target, _targetData.xpath),
+            event: _evt
+        });
+    } else {
+        _this.circleDialogEntity.hide();
+    }
 };
 
 /**
@@ -347,14 +356,13 @@ circle.prototype.clickOn = function(element) {
     /**
      * [若当前元素没有鼠标悬浮样式，且该元素可圈选]
      */
-    if ((!_this.hasClass(element, _this.classNames.clickedClass)) && _this.circleable(element)) {
-        _this.addClass(element, _this.classNames.clickedClass);
-    }
+    if (_this.circleable(element)) {
 
-    /**
-     * 创建元素覆盖层
-     */
-    _this.createElementCover(element);
+        /**
+         * 创建元素覆盖层
+         */
+        _this.createElementCover(element);
+    }
 };
 
 /**
@@ -433,6 +441,13 @@ circle.prototype.circleable = function(element) {
      * [忽略密码输入框]
      */
     if ((element.tagName === 'INPUT') && (element.type === 'password')) {
+        return false;
+    }
+
+    /**
+     * [忽略覆盖物]
+     */
+    if (_this.hasClass(_this.classNames.coverClass)) {
         return false;
     }
 
@@ -594,6 +609,11 @@ circle.prototype.offset = function(element) {
         return {
             top: _boundingClientRect.top + _window.pageYOffset - _documentElement.clientTop,
             left: _boundingClientRect.left + _window.pageXOffset - _documentElement.clientLeft
+        };
+    } else {
+        return {
+            top: 0,
+            left: 0
         };
     }
 };

@@ -217,34 +217,34 @@ sender.prototype.send = function(data, actionName) {
         /**
          * [不支持Uint8Array对象的浏览器]
          */
-        if (!util.global.Uint8Array) {
+        // if (!util.global.Uint8Array) {
 
-            /**
-             * 在支持XMLHttpRequest对象的浏览器且非IE7浏览器时使用compressToUTF16压缩
-             * 
-             * IE浏览器在IE7、IE8开始支持XMLHttpRequest对象
-             */
-            if (util.global.XMLHttpRequest && (parseInt(_ua.ie, 10) != 7)) {
-                _dispatchEventArgs.dataCompressed = _this.lzString.compressToUTF16(JSON.stringify(_dispatchEventArgs.dataUncompressed));
-                _this.compressName = _this.compressMapping.compressToUTF16;
-            }
+        //     /**
+        //      * 在支持XMLHttpRequest对象的浏览器且非IE7浏览器时使用compressToUTF16压缩
+        //      * 
+        //      * IE浏览器在IE7、IE8开始支持XMLHttpRequest对象
+        //      */
+        //     if (util.global.XMLHttpRequest && (parseInt(_ua.ie, 10) != 7)) {
+        //         _dispatchEventArgs.dataCompressed = _this.lzString.compressToUTF16(JSON.stringify(_dispatchEventArgs.dataUncompressed));
+        //         _this.compressName = _this.compressMapping.compressToUTF16;
+        //     }
 
-            /**
-             * 在不支持XMLHttpRequest对象的浏览器或IE7浏览器时使用compressToEncodedURIComponent压缩
-             */
-            else {
-                _dispatchEventArgs.dataCompressed = _this.lzString.compressToEncodedURIComponent(JSON.stringify(_dispatchEventArgs.dataUncompressed));
-                _this.compressName = _this.compressMapping.compressToEncodedURIComponent;
-            }
-        }
+        //     /**
+        //      * 在不支持XMLHttpRequest对象的浏览器或IE7浏览器时使用compressToEncodedURIComponent压缩
+        //      */
+        //     else {
+        _dispatchEventArgs.dataCompressed = _this.lzString.compressToEncodedURIComponent(JSON.stringify(_dispatchEventArgs.dataUncompressed));
+        _this.compressName = _this.compressMapping.compressToEncodedURIComponent;
+        //     }
+        // }
 
-        /**
-         * 支持Uint8Array对象的浏览器使用compressToUint8Array压缩
-         */
-        else {
-            _dispatchEventArgs.dataCompressed = _this.lzString.compressToUint8Array(JSON.stringify(_dispatchEventArgs.dataUncompressed));
-            _this.compressName = _this.compressMapping.compressToUint8Array;
-        }
+        // /**
+        //  * 支持Uint8Array对象的浏览器使用compressToUint8Array压缩
+        //  */
+        // else {
+        //     _dispatchEventArgs.dataCompressed = _this.lzString.compressToUint8Array(JSON.stringify(_dispatchEventArgs.dataUncompressed));
+        //     _this.compressName = _this.compressMapping.compressToUint8Array;
+        // }
 
     } catch (ex) {
         return;
@@ -274,13 +274,13 @@ sender.prototype.send = function(data, actionName) {
 sender.prototype.sendByXMLHttpRequest = function(data) {
     var _this = this,
         _xhr,
-        _data,
+        _data = data,
         _promise;
 
     /**
      * [判断数据长度是否为0]
      */
-    if (!data.length) {
+    if (!_data.length) {
         return;
     }
 
@@ -331,9 +331,9 @@ sender.prototype.sendByXMLHttpRequest = function(data) {
         /**
          * [若支持ArrayBuffer]
          */
-        if (util.global.ArrayBuffer && data.buffer) {
-            _data = data.buffer;
-        }
+        // if (util.global.ArrayBuffer && data.buffer) {
+        //     _data = data.buffer;
+        // }
 
         /**
          * 发送数据

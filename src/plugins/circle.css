@@ -802,16 +802,16 @@
     text-align: center;
 }
 
-.uba-workbench #uba-circle-container #uba-chart-container {
-    height: 100%;
-    width: 100%;
-}
+/*.uba-workbench #uba-circle-container #uba-chart {
+    height: 400px;
+    width: 500px;
+}*/
 
 .uba-workbench #uba-circle-container .uba-chart-container {
     border-top: 1px solid #f1f1f1;
     border-bottom: 1px solid #f1f1f1;
     min-height: 175px;
-    padding: 10px 12px 10px 12px;
+    /*padding: 10px 12px 10px 12px;*/
 }
 
 .uba-workbench #uba-circle-container .uba-chart-container .uba-mode-switcher {

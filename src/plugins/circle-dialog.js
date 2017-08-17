@@ -22,7 +22,7 @@ var _htmlArray = ['<div id="uba-circle-container" class="uba-content-section uba
     '                <div id="uba-row-title" class="uba-form-group">',
     '                    <label for="tagTitle" class="uba-col-2 uba-control-label">名称</label>',
     '                    <div class="uba-col-10">',
-    '                        <input id="uba-tag-title" type="text" class="uba-form-control with-placeholder" readonly />',
+    '                        <input id="uba-tag-title" type="text" class="uba-form-control with-placeholder" />',
     '                        <span class="error-text"></span>',
     '                    </div>',
     '                </div>',
@@ -71,6 +71,7 @@ var _htmlArray = ['<div id="uba-circle-container" class="uba-content-section uba
 
 var util = require('../libs/util'),
     promise = require('es6-promise'),
+    lzString = require('lz-string'),
     echarts = require('../components/echarts');
 // echarts = require('../components/echarts.simple.min');
 
@@ -85,6 +86,12 @@ function circleDialog(options) {
      * 扩展实例属性
      */
     util.extend(true, _this, {
+
+        /**
+         * [lzString 压缩数据对象]
+         * @type {[type]}
+         */
+        lzString: lzString,
 
         /**
          * [wrap 弹出框包裹元素]
@@ -264,7 +271,7 @@ circleDialog.prototype.buildDOM = function() {
          * @type {[type]}
          */
         chartEntity: echarts.init(util.global.document.getElementById('uba-chart'), null, {
-            width: 275,
+            width: 300,
             height: 175
         })
     });
@@ -313,7 +320,7 @@ circleDialog.prototype.update = function() {
         _option;
 
     /**
-     * [value 更新元素标题文本框内容]
+     * [value 默认将元素内容填充到指标名称输入框]
      * @type {[type]}
      */
     _this.txtTitle.value = _this.text;
@@ -330,7 +337,14 @@ circleDialog.prototype.update = function() {
     });
 
     /**
-     * 显示弹出框
+     * [未返回延迟对象]
+     */
+    if(!_promise){
+        return;
+    }
+
+    /**
+     * 显示弹出框，以便能获取元素正确位置
      */
     _this.show();
 
@@ -350,34 +364,145 @@ circleDialog.prototype.update = function() {
          * 将数据转为JSON
          */
         try {
-            _data = JSON.parse(xhr.responseText || '{}')
+            _data = JSON.parse(xhr.responseText || '{}');
         } catch (e) {}
 
         /**
          * [_data 模拟数据]
          * @type {[type]}
          */
-        // _data = JSON.parse('{"data":{"time":["0603","0602","0605","0604"],"datalist":["1003","1001","1005","1004"]}}').data;
+        // _data = {
+        //     "errno": 0,
+        //     "data": {
+        //         "dataList": [{
+        //             "name": "点击数",
+        //             "data": [
+        //                 123,
+        //                 456,
+        //                 789,
+        //                 1011
+        //             ],
+        //             "unit": "次"
+        //         }, {
+        //             "name": "曝光数",
+        //             "data": [
+        //                 456,
+        //                 789,
+        //                 1011,
+        //                 1100
+        //             ],
+        //             "unit": "次"
+        //         }],
+        //         "time": [
+        //             "7.31",
+        //             "8.02",
+        //             "8.04",
+        //             "8.06"
+        //         ]
+        //     }
+        // };
+        _data = _data.data || {};
 
         /**
          * [_option 更新配置]
          * @type {[type]}
          */
+
         _option = util.extend(true, _this.chartOptions, {
             xAxis: {
+                type: 'category',
+                boundaryGap: false,
                 data: _data.time || []
             },
-            series: [{
-                name: '点击数',
+            yAxis: {
+                type: 'value'
+            },
+            grid: {
+                x: 40,
+                x2: 20,
+                y: 10,
+                y2: 20
+            },
+            series: []
+        });
+
+        /**
+         * [创建图标系列数据]
+         */
+        (_data.dataList || []).forEach(function(item, index) {
+            _option.series.push({
+                name: item.name || '',
                 type: 'line',
-                data: _data.datalist || []
-            }]
+                smooth: true,
+                data: item.data || []
+            });
         });
 
         /**
          * 使用新数据渲染图表
          */
         _this.chartEntity.setOption(_option);
+    });
+};
+
+/**
+ * [save 保存圈选弹出框内容]
+ * @return {[type]} [description]
+ */
+circleDialog.prototype.save = function() {
+    var _this = this;
+
+    /**
+     * [_promise 获取数据延迟对象]
+     * @type {[type]}
+     */
+    _promise = _this.getDataPromise({
+        xpath: _this.xpath,
+        selectType: _this.currentCircleOption,
+        name: _this.txtTitle.value, //指标名称
+        url: document.location.href,
+        pos: _this.index,
+        text: _this.text, //元素内容
+    });
+
+    /**
+     * 派发弹出框数据保存事件
+     */
+    _this.__dispatchEvent('onSave');
+
+    /**
+     * [获取到数据后显示弹出框，更新图表]
+     */
+    _promise.then(function(xhr) {
+
+        /**
+         * 将数据转为JSON
+         */
+        try {
+            _data = JSON.parse(xhr.responseText || '{}');
+        } catch (e) {}
+
+
+        /**
+         * [判断是否保存成功]
+         */
+        if (parseInt(_data.errorno) === 0) {
+
+            /**
+             * [_option 隐藏弹出框]
+             * @type {[type]}
+             */
+            _this.hide();
+            return;
+        }
+
+        /**
+         * [显示保存信息]
+         */
+        _data.message = _data.message || '保存指标失败！';
+        if (_data.message.trim().length) {
+            alert(_data.message);
+        }
     });
 };
 
@@ -392,10 +517,20 @@ circleDialog.prototype.getDataPromise = function(data) {
         _data = data,
         _promise;
 
+
+    /**
+     * 压缩数据
+     */
+    try {
+        _data = _this.lzString.compressToEncodedURIComponent(JSON.stringify(_data));
+    } catch (e) {
+        _data = '';
+    }
+
     /**
      * [判断数据长度是否为0]
      */
-    if (!data) {
+    if (!_data.length) {
         return;
     }
 
@@ -471,6 +606,11 @@ circleDialog.prototype.bindEvents = function() {
         _this.__dispatchEvent('onClose');
     });
     util.bind(_this.btnSave, 'click', function() {
+
+        /**
+         * 保存弹出框数据
+         */
+        _this.save();
     });
 
     /**

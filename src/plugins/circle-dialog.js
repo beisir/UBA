@@ -130,10 +130,13 @@ function circleDialog(options) {
         currentCircleOption: 1,
 
         /**
-         * [sericeURL 获取图标数据服务地址]
+         * [serviceURL 获取图标数据服务地址]
          * @type {String}
          */
-        sericeURL: 'http://log.org.hc360.com/logrecordservice/sll',
+        serviceURL: {
+            get: 'http://point.hc360.com/slw/loop/',
+            save: 'http://point.hc360.com/ind/add/'
+        },
 
         /**
          * [chartEntity 图表对象实例]
@@ -334,12 +337,12 @@ circleDialog.prototype.update = function() {
         text: _this.text,
         idx: _this.index,
         opt: _this.currentCircleOption
-    });
+    }, _this.serviceURL.get);
 
     /**
      * [未返回延迟对象]
      */
-    if(!_promise){
+    if (!_promise) {
         return;
     }
 
@@ -407,7 +410,6 @@ circleDialog.prototype.update = function() {
          * [_option 更新配置]
          * @type {[type]}
          */
-
         _option = util.extend(true, _this.chartOptions, {
             xAxis: {
                 type: 'category',
@@ -429,6 +431,7 @@ circleDialog.prototype.update = function() {
         /**
          * [创建图标系列数据]
          */
+        _option.series=[];
         (_data.dataList || []).forEach(function(item, index) {
             _option.series.push({
                 name: item.name || '',
@@ -458,12 +461,12 @@ circleDialog.prototype.save = function() {
      */
     _promise = _this.getDataPromise({
         xpath: _this.xpath,
-        selectType: _this.currentCircleOption,
+        opt: _this.currentCircleOption,
         name: _this.txtTitle.value, //指标名称
         url: document.location.href,
         pos: _this.index,
         text: _this.text, //元素内容
-    });
+    }, _this.serviceURL.save);
 
     /**
      * 派发弹出框数据保存事件
@@ -511,12 +514,11 @@ circleDialog.prototype.save = function() {
  * @param  {[type]} data [description]
  * @return {[type]}      [description]
  */
-circleDialog.prototype.getDataPromise = function(data) {
+circleDialog.prototype.getDataPromise = function(data, serviceURL) {
     var _this = this,
         _xhr,
         _data = data,
         _promise;
-
 
     /**
      * 压缩数据
@@ -561,7 +563,7 @@ circleDialog.prototype.getDataPromise = function(data) {
         /**
          * [打开链接]
          */
-        _xhr.open('POST', _this.sericeURL, true);
+        _xhr.open('POST', serviceURL, true);
         _xhr.onreadystatechange = function() {
             if (_xhr.readyState === 4) {
                 if (_xhr.status === 200) {

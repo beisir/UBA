@@ -501,6 +501,7 @@ tracker.prototype.registerEventListener = function() {
              * [_promise 发送点击数据]
              * @type {promise}
              */
+            _data.tm = +new Date();
             var _promise = _this.senderEntity.send(_data, 'click');
 
             /**

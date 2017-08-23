@@ -627,6 +627,7 @@ tracker.prototype.registerDOMObserver = function() {
              * [_promise 创建发送数据延迟对象]
              * @type {Object}
              */
+            _data.tm = +new Date();
             _promise = _this.senderEntity.send(util.extend(true, {}, _data, {
                 e: _tempNodes
             }), 'exposure');

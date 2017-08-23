@@ -69,7 +69,7 @@ function page(options) {
          * [pageTime 访客访问时间]
          * @type {NUmber}
          */
-        pageTime: +new Date(),
+        pageTime: (new Date()).getTime(),
 
         /**
          * [pageFrameType 获取框架页面类型]

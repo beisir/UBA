@@ -55,7 +55,7 @@ function tracker(options) {
          * [lastActionTime 访客最后一个行为时间]
          * @type {[type]}
          */
-        lastActionTime: +new Date(),
+        lastActionTime: (new Date()).getTime(),
 
         /**
          * [userEntity 生成用户对象实例]
@@ -296,61 +296,61 @@ tracker.prototype.sendPageView = function() {
  * @return {[type]} [description]
  */
 tracker.prototype.loadCirclePlugin = function() {
-    // var _this = this,
-    //     _promiseJS,
-    //     _promiseCSS;
+    var _this = this,
+        _promiseJS,
+        _promiseCSS;
 
-    // /**
-    //  * [若当前圈选对象实例不存在]
-    //  */
-    // if (!_this.circleHandlerEntity) {
+    /**
+     * [若当前圈选对象实例不存在]
+     */
+    if (!_this.circleHandlerEntity) {
 
-    //     /**
-    //      * [_promiseJS 创建延迟对象]
-    //      */
-    //     _promiseJS = new promise(function(resolve, reject) {
+        /**
+         * [_promiseJS 创建延迟对象]
+         */
+        _promiseJS = new promise(function(resolve, reject) {
 
-    //         /**
-    //          * [异步加载圈选插件]
-    //          */
-    //         require.ensure([], function(require) {
-    //             resolve(require('../plugins/circle'));
-    //         }, 'plugin.circle');
-    //     });
+            /**
+             * [异步加载圈选插件]
+             */
+            require.ensure([], function(require) {
+                resolve(require('../plugins/circle'));
+            }, 'plugin.circle');
+        });
 
-    //     /**
-    //      * [_promiseCSS 创建延迟对象]
-    //      */
-    //     _promiseCSS = new promise(function(resolve, reject) {
+        /**
+         * [_promiseCSS 创建延迟对象]
+         */
+        _promiseCSS = new promise(function(resolve, reject) {
 
-    //         /**
-    //          * [异步加载圈选插件]
-    //          */
-    //         require.ensure([], function(require) {
-    //             resolve(require('../plugins/circle.css'));
-    //         }, 'plugin.circle.style');
-    //     });
+            /**
+             * [异步加载圈选插件]
+             */
+            require.ensure([], function(require) {
+                resolve(require('../plugins/circle.css'));
+            }, 'plugin.circle.style');
+        });
 
-    //     /**
-    //      * [加载完圈选脚本和样式完成后通知框架页圈选功能加载完毕]
-    //      */
-    //     promise.all([_promiseJS, _promiseCSS]).then(function(_tempModules) {
-    //         var _circleModule = _tempModules[0];
+        /**
+         * [加载完圈选脚本和样式完成后通知框架页圈选功能加载完毕]
+         */
+        promise.all([_promiseJS, _promiseCSS]).then(function(_tempModules) {
+            var _circleModule = _tempModules[0];
 
-    //         /**
-    //          * [circleHandlerEntity 初始化圈选插件实例]
-    //          * @type {circleModule}
-    //          */
-    //         _this.circleHandlerEntity = new _circleModule(_this);
+            /**
+             * [circleHandlerEntity 初始化圈选插件实例]
+             * @type {circleModule}
+             */
+            _this.circleHandlerEntity = new _circleModule(_this);
 
-    //         /**
-    //          * 通知父框架页圈选组件加载完成
-    //          */
-    //         _this.pageEntity.postMessage({
-    //             action: 'loadCirclePluginComplete'
-    //         });
-    //     });
-    // }
+            /**
+             * 通知父框架页圈选组件加载完成
+             */
+            _this.pageEntity.postMessage({
+                action: 'loadCirclePluginComplete'
+            });
+        });
+    }
 };
 
 /**
@@ -370,7 +370,7 @@ tracker.prototype.registerEventListener = function() {
             vi: _this.userEntity.visitId,
             si: _this.userEntity.sessionId,
             ui: _this.userEntity.userId,
-            tm: +new Date(),
+            tm: (new Date()).getTime(),
             pi: _this.pageEntity.pageId,
             ptm: _this.userEntity.visitTime,
             pt: _this.pageEntity.protocol,
@@ -392,7 +392,7 @@ tracker.prototype.registerEventListener = function() {
              * [lastActionTime 设置最后一次访客行为事件]
              * @type {Number}
              */
-            _this.lastActionTime = +new Date();
+            _this.lastActionTime = (new Date()).getTime();
 
             /**
              * [_element 获取事件元素]
@@ -507,7 +507,7 @@ tracker.prototype.registerEventListener = function() {
              * [tm 设置发送数据时间]
              * @type {Timestamp}
              */
-            _data.tm = +new Date();
+            _data.tm = (new Date()).getTime();
 
             /**
              * [_promise 发送点击数据]
@@ -557,7 +557,7 @@ tracker.prototype.registerDOMObserver = function() {
             si: _this.userEntity.sessionId,
             ui: _this.userEntity.userId,
             pi: _this.pageEntity.pageId,
-            tm: +new Date(),
+            tm: (new Date()).getTime(),
             ptm: _this.userEntity.visitTime,
             pt: _this.pageEntity.protocol,
             d: _this.pageEntity.host,
@@ -644,7 +644,7 @@ tracker.prototype.registerDOMObserver = function() {
              * [tm 设置发送数据时间]
              * @type {Timestamp}
              */
-            _data.tm = +new Date();
+            _data.tm = (new Date()).getTime();
 
             /**
              * [_promise 创建发送数据延迟对象]
@@ -742,7 +742,7 @@ tracker.prototype.beforeunloadHandler = function() {
             ui: _this.userEntity.userId,
             vi: _this.userEntity.visitId,
             si: _this.userEntity.sessionId,
-            tm: +new Date(),
+            tm: (new Date()).getTime(),
             ptm: _this.userEntity.visitTime,
             pi: _this.pageEntity.pageId,
             d: _this.pageEntity.host,

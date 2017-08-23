@@ -585,7 +585,7 @@ sender.prototype.sendByFormSubmit = function(data) {
  */
 sender.prototype.getServiceUrl = function() {
     var _this = this;
-    return [_this.service.protocol, _this.service.host, _this.service.path, '?', 'stm=' + (+new Date()), '&cps=' + _this.compressName, '&st=' + _this.senderName].join('');
+    return [_this.service.protocol, _this.service.host, _this.service.path, '?', 'stm=' + ((new Date()).getTime()), '&cps=' + _this.compressName, '&st=' + _this.senderName].join('');
 };
 
 /**

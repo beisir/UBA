@@ -61,7 +61,7 @@ function user(options) {
              * [visitTime 访客访问时间]
              * @type {NUmber}
              */
-            visitTime: +new Date(),
+            visitTime: (new Date()).getTime(),
 
             /**
              * [cookieDomain cookie所在域列表]
@@ -132,10 +132,10 @@ user.prototype.init = function() {
      * [visitId 获取或初始化访客编号]
      * @type {String}
      */
-    _this.visitId = cookie.get(_this.cookieMapping.hc360visitid);
+    _this.visitId = cookie.get(_this.cookieMapping.visitid);
     if (!_validateUUID(_this.visitId)) {
         _this.visitId = (new uuid()).id;
-        _this.setCookie(_this.cookieMapping.hc360visitid, _this.visitId, {
+        _this.setCookie(_this.cookieMapping.visitid, _this.visitId, {
             expires: 365 * 10 //过期时间10年
         });
     }
@@ -144,10 +144,10 @@ user.prototype.init = function() {
      * [sessionId 获取或设置访客会话编号]
      * @type {String}
      */
-    _this.sessionId = cookie.get(_this.cookieMapping.hc360sessionid);
+    _this.sessionId = cookie.get(_this.cookieMapping.sessionid);
     if (!_validateUUID(_this.sessionId)) {
         _this.sessionId = (new uuid()).id;
-        _this.setCookie(_this.cookieMapping.hc360sessionid, _this.sessionId, {}); // 无过期时间表示随会话结束
+        _this.setCookie(_this.cookieMapping.sessionid, _this.sessionId, {}); // 无过期时间表示随会话结束
     }
 
     /**
@@ -156,7 +156,7 @@ user.prototype.init = function() {
      */
     _this.firstVisitTime = cookie.get(_this.cookieMapping.firstvisittime) || '';
     if (!_validateTimestamp(_this.firstVisitTime)) {
-        _this.firstVisitTime = +new Date();
+        _this.firstVisitTime = (new Date()).getTime();
         _this.setCookie(_this.cookieMapping.firstvisittime, _this.firstVisitTime, {
             expires: 90 //过期时间90天
         });

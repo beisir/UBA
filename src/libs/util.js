@@ -1,7 +1,8 @@
 var class2type = {},
     core_toString = class2type.toString,
     core_hasOwn = class2type.hasOwnProperty,
-    core_trim = ''.trim,
+    // core_trim = ''.trim,
+    core_trim = undefined,//因为需要过滤换行符，暂不使用原生的 trim 方法
     rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 var class2typelist = "Boolean Number String Function Array Date RegExp Object Error".split(" ");
 for (var i = 0, j = class2typelist.length; i < j; i++) {

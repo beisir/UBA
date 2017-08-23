@@ -26,8 +26,8 @@ function page(options) {
          * [pageID 页面编号，用于区分访客打开相同页面]
          * @type {String}
          */
-        // pageId: ((window.PAGE_ID) || (window.HC && window.HC.PAGE_ID)) || (new uuid()).id,
-        pageId: (new uuid()).id,
+        pageId: ((window.PAGE_ID) || (window.HC && window.HC.PAGE_ID)) || (new uuid()).id,
+        // pageId: (new uuid()).id,
 
         /**
          * [title 页面标题]
@@ -745,11 +745,17 @@ page.prototype.analyzeEventElementAttribute = function(eventType, element) {
             _child = _childs[_index];
             if ("search" === _child.type || "text" === _child.type || "submit" === _child.type) {
                 _obj.x = _this.path(_child).xpath;
-                _obj.v = util.trim(_child.value);
+                _obj.v = _child.value;
             }
 
         }
     }
+
+    /**
+     * [v 过滤元素内容中的空格及换行符]
+     * @type {String}
+     */
+    _obj.v = util.trim(_obj.v);
 
     return _obj;
 };
@@ -869,7 +875,7 @@ page.prototype.getExposureNodes = function(_children) {
         if (_child.leaf && _regExpMatch(_child.attributes.href || '')) {
             _leafNodes.push({
                 x: _child.xpath,
-                v: _child.text,
+                v: util.trim(_child.text),
                 h: _this.normalizePath(_child.attributes.href),
                 idx: _this.getElementIndex(_child.node, _child.xpath),
                 n: _child.node

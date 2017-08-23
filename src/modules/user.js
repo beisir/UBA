@@ -77,7 +77,18 @@ function user(options) {
                 } catch (ex) {
                     return [util.global.location.hostname];
                 }
-            }()
+            }(),
+
+            /**
+             * [cookieMapping cookie键值对映射关系]
+             * @type {Object}
+             */
+            cookieMapping: {
+                userid: 'lastloginusers',
+                visitid: 'hc360visitid',
+                sessionid: 'hc360sessionid',
+                firstvisittime: 'hc360firstvisittime'
+            }
         },
         options);
 
@@ -92,10 +103,6 @@ function user(options) {
  */
 user.prototype.init = function() {
     var _this = this,
-        _userIdKey = 'LoginID',
-        _visitIdKey = 'hc360visitid',
-        _sessionIdKey = 'hc360sessionid',
-        _firstVisitTimeKey = 'hc360firstvisittime',
 
         /**
          * [_validateUUID 验证UUID]
@@ -116,18 +123,19 @@ user.prototype.init = function() {
         };
 
     /**
-     * [userId 获取登录用户名]
+     * [userId 获取登录用户名，登录过多个用户时，获取最后一次登录的用户名]
      */
-    _this.userId = cookie.get(_userIdKey);
+    var _userIds = (cookie.get(_this.cookieMapping.userid) || '').split(',');
+    _this.userId = _userIds.pop();
 
     /**
      * [visitId 获取或初始化访客编号]
      * @type {String}
      */
-    _this.visitId = cookie.get(_visitIdKey);
+    _this.visitId = cookie.get(_this.cookieMapping.hc360visitid);
     if (!_validateUUID(_this.visitId)) {
         _this.visitId = (new uuid()).id;
-        _this.setCookie(_visitIdKey, _this.visitId, {
+        _this.setCookie(_this.cookieMapping.hc360visitid, _this.visitId, {
             expires: 365 * 10 //过期时间10年
         });
     }
@@ -136,23 +144,42 @@ user.prototype.init = function() {
      * [sessionId 获取或设置访客会话编号]
      * @type {String}
      */
-    _this.sessionId = cookie.get(_sessionIdKey);
+    _this.sessionId = cookie.get(_this.cookieMapping.hc360sessionid);
     if (!_validateUUID(_this.sessionId)) {
         _this.sessionId = (new uuid()).id;
-        _this.setCookie(_sessionIdKey, _this.sessionId, {}); // 无过期时间表示随会话结束
+        _this.setCookie(_this.cookieMapping.hc360sessionid, _this.sessionId, {}); // 无过期时间表示随会话结束
     }
 
     /**
      * [firstVisitTime 获取或设置访客首次访问时间]
      * @type {String}
      */
-    _this.firstVisitTime = cookie.get(_firstVisitTimeKey) || '';
+    _this.firstVisitTime = cookie.get(_this.cookieMapping.firstvisittime) || '';
     if (!_validateTimestamp(_this.firstVisitTime)) {
         _this.firstVisitTime = +new Date();
-        _this.setCookie(_firstVisitTimeKey, _this.firstVisitTime, {
+        _this.setCookie(_this.cookieMapping.firstvisittime, _this.firstVisitTime, {
             expires: 90 //过期时间90天
         });
     }
+};
+
+/**
+ * [getUserName 实时获取当前用户名]
+ * @return {String} [用户名]
+ */
+user.prototype.getUserName = function() {
+    var _this = this;
+
+    /**
+     * [userId 获取登录用户名，登录过多个用户时，获取最后一次登录的用户名]
+     */
+    var _userIds = (cookie.get(_this.cookieMapping.userid) || '').split(',');
+    _this.userId = _userIds.pop();
+
+    /**
+     * 返回当前用户名
+     */
+    return _this.userId;
 };
 
 /**
@@ -168,7 +195,9 @@ user.prototype.setCookie = function(key, value, attributes) {
      * [写入多个域名Cookie]
      */
     _this.cookieDomain.forEach(function(domain) {
-        cookie.set(key, value, util.extend(attributes, { domain: domain }));
+        cookie.set(key, value, util.extend(attributes, {
+            domain: domain
+        }));
     });
 };
 

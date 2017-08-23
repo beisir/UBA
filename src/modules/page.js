@@ -26,7 +26,8 @@ function page(options) {
          * [pageID 页面编号，用于区分访客打开相同页面]
          * @type {String}
          */
-        pageId: ((window.PAGE_ID) || (window.HC && window.HC.PAGE_ID)) || (new uuid()).id,
+        // pageId: ((window.PAGE_ID) || (window.HC && window.HC.PAGE_ID)) || (new uuid()).id,
+        pageId: (new uuid()).id,
 
         /**
          * [title 页面标题]

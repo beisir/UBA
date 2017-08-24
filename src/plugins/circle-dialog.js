@@ -489,12 +489,13 @@ circleDialog.prototype.save = function() {
         /**
          * [判断是否保存成功]
          */
-        if (parseInt(_data.errorno) === 0) {
+        if (parseInt(_data.errno) === 0) {
 
             /**
              * [_option 隐藏弹出框]
              * @type {[type]}
              */
+            alert('保存指标成功！');
             _this.hide();
             return;
         }

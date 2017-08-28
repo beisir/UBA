@@ -185,7 +185,7 @@ tracker.prototype.observe = function() {
          * 通知父框架页当前页面加载完成，用于用户行为分析后台的圈选功能
          */
         _this.pageEntity.postMessage({
-            action: 'iframeDOMContentLoaded'
+            action: 'iframeDOMContentLoaded '
         });
     });
 

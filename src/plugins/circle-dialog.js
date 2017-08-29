@@ -336,6 +336,7 @@ circleDialog.prototype.update = function() {
         xpath: _this.xpath,
         text: _this.text,
         idx: _this.index,
+        url: document.location.href,
         opt: _this.currentCircleOption
     }, _this.serviceURL.get);
 

@@ -152,11 +152,11 @@ circle.prototype.switchToHeatMode = function() {
 circle.prototype.bindEvents = function() {
     var _this = this,
         _body = util.global.document.body;
-    util.bind(_body, 'mouseover', _this.bodyMouseOverHandler, false);
-    util.bind(_body, 'mouseout', _this.bodyMouseOutHandler, false);
-    util.bind(_body, 'click', _this.elementClickHandler, false);
-    util.bind(_body, 'tap', _this.elementClickHandler, false);
-    util.bind(_body, 'touch', _this.elementClickHandler, false);
+    util.bind(_body, 'mouseover', _this.bodyMouseOverHandler, true);
+    util.bind(_body, 'mouseout', _this.bodyMouseOutHandler, true);
+    util.bind(_body, 'click', _this.elementClickHandler, true);
+    util.bind(_body, 'tap', _this.elementClickHandler, true);
+    util.bind(_body, 'touch', _this.elementClickHandler, true);
 };
 
 /**
@@ -166,11 +166,11 @@ circle.prototype.bindEvents = function() {
 circle.prototype.unbindEvents = function() {
     var _this = this,
         _body = util.global.document.body;
-    util.removeEventListener(_body, 'mouseover', _this.bodyMouseOverHandler, false);
-    util.removeEventListener(_body, 'mouseout', _this.bodyMouseOutHandler, false);
-    util.removeEventListener(_body, 'click', _this.elementClickHandler, false);
-    util.removeEventListener(_body, 'tap', _this.elementClickHandler, false);
-    util.removeEventListener(_body, 'touch', _this.elementClickHandler, false);
+    util.removeEventListener(_body, 'mouseover', _this.bodyMouseOverHandler, true);
+    util.removeEventListener(_body, 'mouseout', _this.bodyMouseOutHandler, true);
+    util.removeEventListener(_body, 'click', _this.elementClickHandler, true);
+    util.removeEventListener(_body, 'tap', _this.elementClickHandler, true);
+    util.removeEventListener(_body, 'touch', _this.elementClickHandler, true);
 };
 
 /**

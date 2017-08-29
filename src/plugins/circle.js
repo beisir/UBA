@@ -187,13 +187,6 @@ circle.prototype.bodyMouseOverHandler = function(event) {
         _ignoreTagNames = ["BODY", "HR", "BR", "CANVAS"];
 
     /**
-     * 取消事件默认行为，阻止事件冒泡
-     */
-    _evt.preventDefault();
-    _evt.stopImmediatePropagation();
-    _evt.stopPropagation();
-
-    /**
      * [_target 获取事件元素及元素类型]
      * @type {[type]}
      */
@@ -201,18 +194,25 @@ circle.prototype.bodyMouseOverHandler = function(event) {
     _tagName = _target.tagName;
 
     /**
-     * [忽略指定类型元素]
-     */
-    if (_ignoreTagNames.indexOf(_tagName) !== -1) {
-        return;
-    }
-
-    /**
      * [忽略鼠标点击弹出框]
      */
     if (_this.closest(_target, function(element) {
             return element.id === 'uba-circle-container';
         })) {
+        return;
+    }
+
+    /**
+     * 取消事件默认行为，阻止事件冒泡
+     */
+    _evt.preventDefault();
+    _evt.stopImmediatePropagation();
+    _evt.stopPropagation();
+
+    /**
+     * [忽略指定类型元素]
+     */
+    if (_ignoreTagNames.indexOf(_tagName) !== -1) {
         return;
     }
 
@@ -240,17 +240,26 @@ circle.prototype.bodyMouseOutHandler = function(event) {
         _target;
 
     /**
+     * [_target 获取事件元素及元素类型]
+     * @type {[type]}
+     */
+    _target = _evt.target || _evt.srcElement;    
+
+    /**
+     * [忽略鼠标点击弹出框]
+     */
+    if (_this.closest(_target, function(element) {
+            return element.id === 'uba-circle-container';
+        })) {
+        return;
+    }
+
+    /**
      * 取消事件默认行为，阻止事件冒泡
      */
     _evt.preventDefault();
     _evt.stopImmediatePropagation();
     _evt.stopPropagation();
-
-    /**
-     * [_target 获取事件元素及元素类型]
-     * @type {[type]}
-     */
-    _target = _evt.target || _evt.srcElement;
 
     /**
      * 取消元素鼠标悬浮样式
@@ -274,13 +283,6 @@ circle.prototype.elementClickHandler = function(event) {
         _targetData;
 
     /**
-     * 取消事件默认行为，阻止事件冒泡
-     */
-    _evt.preventDefault();
-    _evt.stopImmediatePropagation();
-    _evt.stopPropagation();
-
-    /**
      * [_target 获取事件元素及元素类型]
      * @type {[type]}
      */
@@ -288,18 +290,25 @@ circle.prototype.elementClickHandler = function(event) {
     _tagName = _target.tagName;
 
     /**
-     * [忽略指定类型元素]
-     */
-    if (_ignoreTagNames.indexOf(_tagName) !== -1) {
-        return;
-    }
-
-    /**
      * [忽略鼠标点击弹出框]
      */
     if (_this.closest(_target, function(element) {
             return element.id === 'uba-circle-container';
         })) {
+        return;
+    }
+
+    /**
+     * 取消事件默认行为，阻止事件冒泡
+     */
+    _evt.preventDefault();
+    _evt.stopImmediatePropagation();
+    _evt.stopPropagation();
+
+    /**
+     * [忽略指定类型元素]
+     */
+    if (_ignoreTagNames.indexOf(_tagName) !== -1) {
         return;
     }
 

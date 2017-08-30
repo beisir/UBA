@@ -429,13 +429,22 @@ circleDialog.prototype.save = function() {
     var _this = this;
 
     /**
+     * [验证指标名称非空]
+     */
+    var _title = util.trim(_this.txtTitle.value);
+    if (!util.trim(_title).length) {
+        alert('请输入指标名称！');
+        return;
+    }
+
+    /**
      * [_promise 获取数据延迟对象]
      * @type {[type]}
      */
     _promise = _this.getDataPromise({
         xpath: _this.xpath,
         opt: _this.currentCircleOption,
-        name: _this.txtTitle.value, //指标名称
+        name: _title, //指标名称
         url: document.location.href,
         pos: _this.index,
         text: _this.text, //元素内容

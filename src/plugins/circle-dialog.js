@@ -153,6 +153,9 @@ function circleDialog(options) {
                 text: '',
                 subtext: ''
             },
+            legend: {
+                data: []
+            },
             tooltip: {
                 trigger: 'axis'
             },
@@ -166,7 +169,14 @@ function circleDialog(options) {
                     formatter: '{value}'
                 },
                 splitNumber: 2
-            }
+            },
+            grid: {
+                x: 50,
+                x2: 40,
+                y: 10,
+                y2: 20
+            },
+            series: []
         },
 
         /**
@@ -332,6 +342,7 @@ circleDialog.prototype.update = function() {
      * [_promise 获取数据延迟对象]
      * @type {[type]}
      */
+    // _this.serviceURL.get='/ldt';
     _promise = _this.getDataPromise({
         xpath: _this.xpath,
         text: _this.text,
@@ -375,36 +386,7 @@ circleDialog.prototype.update = function() {
          * [_data 模拟数据]
          * @type {[type]}
          */
-        // _data = {
-        //     "errno": 0,
-        //     "data": {
-        //         "dataList": [{
-        //             "name": "点击数",
-        //             "data": [
-        //                 123,
-        //                 456,
-        //                 789,
-        //                 1011
-        //             ],
-        //             "unit": "次"
-        //         }, {
-        //             "name": "曝光数",
-        //             "data": [
-        //                 456,
-        //                 789,
-        //                 1011,
-        //                 1100
-        //             ],
-        //             "unit": "次"
-        //         }],
-        //         "time": [
-        //             "7.31",
-        //             "8.02",
-        //             "8.04",
-        //             "8.06"
-        //         ]
-        //     }
-        // };
+        // _data = {"data":{"dataList":[{"unit":"次","data":[141565,124,85873,64083,133855,126917,58969],"name":"浏览量"},{"unit":"次","data":[14,0,0,0,6,123,35],"name":"点击量"}],"time":["2017-08-24","2017-08-25","2017-08-26","2017-08-27","2017-08-28","2017-08-29","2017-08-30"]}};
         _data = _data.data || {};
 
         /**
@@ -413,26 +395,15 @@ circleDialog.prototype.update = function() {
          */
         _option = util.extend(true, _this.chartOptions, {
             xAxis: {
-                type: 'category',
-                boundaryGap: false,
                 data: _data.time || []
-            },
-            yAxis: {
-                type: 'value'
-            },
-            grid: {
-                x: 40,
-                x2: 20,
-                y: 10,
-                y2: 20
-            },
-            series: []
+            }
         });
 
         /**
          * [创建图标系列数据]
          */
-        _option.series=[];
+        _option.series = [];
+        _option.legend.data = [];
         (_data.dataList || []).forEach(function(item, index) {
             _option.series.push({
                 name: item.name || '',
@@ -440,6 +411,7 @@ circleDialog.prototype.update = function() {
                 smooth: true,
                 data: item.data || []
             });
+            _option.legend.data.push(item.name || '');
         });
 
         /**

@@ -601,9 +601,12 @@ circleDialog.prototype.bindEvents = function() {
     /**
      * [绑定圈选选项按钮点击事件]
      */
-    _this.filterButtonGroup.childNodes.forEach(function(child, index) {
-        util.bind(child, 'click', _this.switchCircleOptionHandler);
-    });
+    for (var i = 0; i < _this.filterButtonGroup.childNodes.length; i++) {
+        var _childNodeTemp = _this.filterButtonGroup.childNodes[i];
+        if (_childNodeTemp.nodeType === 1) {
+            util.bind(_childNodeTemp, 'click', _this.switchCircleOptionHandler);
+        }
+    }
 };
 
 /**
@@ -703,24 +706,24 @@ circleDialog.prototype.switchCircleOption = function() {
     /**
      * [删除同级元素的选中样式，设置当前元素的选中样式]
      */
-    _this.filterButtonGroup.childNodes.forEach(function(child, index) {
+    for (var i = 0; i < _this.filterButtonGroup.childNodes.length; i++) {
+        var _childNodeTemp = _this.filterButtonGroup.childNodes[i];
 
         /**
          * [排除非元素节点]
          */
-        if (child.nodeType !== 1) {
-            return true;
-        }
+        if (_childNodeTemp.nodeType === 1) {
 
-        /**
-         * [设置圈选选项样式]
-         */
-        if (parseInt(child.getAttribute('data-val')) == _this.currentCircleOption) {
-            _this.addClass(child, 'uba-selected');
-        } else {
-            _this.removeClass(child, 'uba-selected');
+            /**
+             * [设置圈选选项样式]
+             */
+            if (parseInt(_childNodeTemp.getAttribute('data-val')) == _this.currentCircleOption) {
+                _this.addClass(_childNodeTemp, 'uba-selected');
+            } else {
+                _this.removeClass(_childNodeTemp, 'uba-selected');
+            }
         }
-    });
+    }
 };
 
 /**

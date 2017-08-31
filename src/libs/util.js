@@ -2,7 +2,7 @@ var class2type = {},
     core_toString = class2type.toString,
     core_hasOwn = class2type.hasOwnProperty,
     // core_trim = ''.trim,
-    core_trim = undefined,//因为需要过滤换行符，暂不使用原生的 trim 方法
+    core_trim = undefined, //因为需要过滤换行符，暂不使用原生的 trim 方法
     rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
 var class2typelist = "Boolean Number String Function Array Date RegExp Object Error".split(" ");
 for (var i = 0, j = class2typelist.length; i < j; i++) {
@@ -14,6 +14,36 @@ for (var i = 0, j = class2typelist.length; i < j; i++) {
  * @type {Object}
  */
 var util = {
+
+    /***
+     * 转换价格，亿和万
+     * @param price
+     * @returns {string}
+     */
+    ConversionPrice: function(price, fixed) {
+        var _price = Number(price),
+            _fixed = 2,
+            _convertList = [{
+                unit: '万',
+                measure: 10000
+            }, {
+                unit: '亿',
+                measure: 10000
+            }],
+            shiftUnit = {};
+
+        /**
+         * [保留小数位数]
+         */
+        if (fixed != undefined) {
+            _fixed = Number(fixed);
+        }
+        
+        while ((_convertList.length >= 0) && _price >= _convertList[0].measure && (shiftUnit = _convertList.shift())) {
+            _price = _price / shiftUnit.measure;
+        }
+        return _price.toFixed(_fixed) + (shiftUnit.unit || "");
+    },
 
     /**
      * [getFramePageType 获取框架页面类型]
@@ -565,6 +595,8 @@ util.visible = function(el, direction) {
         else if (direction === 'horizontal')
             return !!((compareRight <= viewRight) && (compareLeft >= viewLeft));
     }
+
+
 };
 
 module.exports = util;

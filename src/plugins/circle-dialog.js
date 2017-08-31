@@ -166,7 +166,16 @@ function circleDialog(options) {
             yAxis: {
                 type: 'value',
                 axisLabel: {
-                    formatter: '{value}'
+                    // formatter: '{value}',
+                    /**
+                     * [formatter 格式化数据]
+                     * @param  {[type]} value [刻度数值（类目）]
+                     * @param  {[type]} index [刻度的索引]
+                     * @return {[type]}       [description]
+                     */
+                    formatter: function(value, index) {
+                        return util.ConversionPrice(value, 0);
+                    }
                 },
                 splitNumber: 2
             },
@@ -386,7 +395,7 @@ circleDialog.prototype.update = function() {
          * [_data 模拟数据]
          * @type {[type]}
          */
-        // _data = {"data":{"dataList":[{"unit":"次","data":[141565,124,85873,64083,133855,126917,58969],"name":"浏览量"},{"unit":"次","data":[14,0,0,0,6,123,35],"name":"点击量"}],"time":["2017-08-24","2017-08-25","2017-08-26","2017-08-27","2017-08-28","2017-08-29","2017-08-30"]}};
+        _data = { "data": { "dataList": [{ "unit": "次", "data": [141565, 124, 85873, 64083, 133855, 126917, 58969], "name": "浏览量" }, { "unit": "次", "data": [14, 0, 0, 0, 6, 123, 35], "name": "点击量" }], "time": ["2017-08-24", "2017-08-25", "2017-08-26", "2017-08-27", "2017-08-28", "2017-08-29", "2017-08-30"] } };
         _data = _data.data || {};
 
         /**

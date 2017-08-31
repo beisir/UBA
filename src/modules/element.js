@@ -91,7 +91,9 @@ element.prototype.path = function() {
      */
     if (_this.class && _this.class.length) {
         for (var i = 0, j = _this.class.length; i < j; i++) {
-            _path.push('.' + _this.class[i]);
+            if(util.trim(_this.class[i]).length){
+                _path.push('.' + _this.class[i]);
+            }
         }
     }
 

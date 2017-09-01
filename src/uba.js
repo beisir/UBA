@@ -1,4 +1,9 @@
 /**
+ * 根据协议动态设置publicPath
+ */
+__webpack_public_path__ = ('https:' == document.location.protocol ? 'https://styles.hc360.com' : 'http://style.org.hc360.cn') + '/js/projects/UBA/dist/';
+
+/**
  * [加载jQuery并开始初始化用户行为分析功能]
  */
 (function(callback) {

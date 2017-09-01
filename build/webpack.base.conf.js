@@ -9,6 +9,23 @@ function resolve(dir) {
     return path.join(__dirname, '..', dir);
 }
 
+/**
+ * [guid 生成guid]
+ */
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0,
+            v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
+/**
+ * [_jsonpFunction]
+ * @type {String}
+ */
+var _jsonpFunction = 'webpackJsonp_hcuba_' + (guid().replace(/\-/g, '_'));
+
 module.exports = {
     entry: {
         uba: './src/uba.js'
@@ -16,7 +33,8 @@ module.exports = {
     output: {
         path: config.assetsRoot,
         filename: '[name].js',
-        publicPath: config.assetsPublicPath
+        publicPath: config.assetsPublicPath,
+        jsonpFunction: _jsonpFunction
     },
     resolve: {
         extensions: ['', '.js', '.css']

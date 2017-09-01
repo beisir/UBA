@@ -315,7 +315,7 @@ tracker.prototype.loadCirclePlugin = function() {
              * [异步加载圈选插件]
              */
             require.ensure([], function(require) {
-                resolve(require('../plugins/circle'));
+                resolve(require('../plugins/circle.js'));
             }, 'plugin.circle');
         });
 
@@ -328,7 +328,7 @@ tracker.prototype.loadCirclePlugin = function() {
              * [异步加载圈选插件]
              */
             require.ensure([], function(require) {
-                resolve(require('../plugins/circle.css'));
+                resolve(require('../plugins/circle.style.css'));
             }, 'plugin.circle.style');
         });
 

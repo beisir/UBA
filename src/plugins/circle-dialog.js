@@ -4,12 +4,12 @@ var _htmlArray = ['<div id="uba-circle-container" class="uba-content-section uba
     '            <div class="tips">',
     '                <i>?</i>',
     '                <span>',
-    '                <span>圈选功能使用可视化方式采集数据.</span>',
-    '                <span>页面：表示统计这个元素在某个页面或者页面组的数据，在下拉列表中选择已定义的页面。</span>',
-    '                <span>圈选：根据业务需要，选择你希望统计的数据。</span>',
-    '                <span>图中显示过去7天及今天的浏览量、点击量。</span>',
-    '                <span>点击保存后即可在单图、漏斗、留存等分析模块中使用。</span>',
-    '                <span>了解更多，请参考 <a href="javascript:;">帮助文档。</a></span>',
+    '                <span>圈选功能使用可视化方式采集数据。</span>',
+    '                <span>当前元素:由当前地址、圈选文本、元素路径、元素索引定位。</span>',
+    '                <span>当前位置:由类似地址、元素路径、元素索引定位。</span>',
+    '                <span>同类元素:由当前地址、元素路径定位。</span>',
+    '                <span>浏览量：是当前页面的访问量</span>',
+    '                <span>点击量与选择的标签相关。具体详情见稍后的<a href="javascript:;">帮助中心</a>。</span>',
     '                </span>',
     '            </div>',
     '            <div class="uba-circle-header-tips-board"></div>',
@@ -40,8 +40,8 @@ var _htmlArray = ['<div id="uba-circle-container" class="uba-content-section uba
     '                        <div class="filter-container">',
     '                            <div class="button-group" id="filter-button-group">',
     '                                <div class="filter-button-item uba-selected" data-val="1">当前元素</div>',
-    '                                <div class="filter-button-item" data-val="2">当前位置</div>',
     '                                <div class="filter-button-item" data-val="3">同类元素</div>',
+    '                                <div class="filter-button-item" data-val="2">当前位置</div>',
     // '                                <div class="filter-button-item selected" data-val="4">自定义</div>',
     '                            </div>',
     // '                            <div class="filter-detail">',
@@ -182,7 +182,7 @@ function circleDialog(options) {
             grid: {
                 x: 50,
                 x2: 40,
-                y: 10,
+                y: 20,
                 y2: 20
             },
             series: []
@@ -321,6 +321,48 @@ circleDialog.prototype.render = function(options) {
         _this.left = _event.pageX,
         _this.top = _event.pageY,
         _this.currentCircleOption = 1;
+
+    /**
+     * [_windowWidth 获取视窗宽高]
+     * @type {Number}
+     */
+    var _windowWidth = 0,
+        _windowHeight = 0,
+        _dialogWidth = 320,
+        _dialogHeight = 328,
+        _elementPosition = _this.target.getBoundingClientRect();
+
+    /**
+     * [获取视窗宽度]
+     */
+    if (window.innerWidth) {
+        _windowWidth = window.innerWidth;
+    } else if (document.body && document.body.clientWidth) {
+        _windowWidth = document.body.clientWidth;
+    }
+
+    /**
+     * [获取视窗高度]
+     */
+    if (window.innerHeight) {
+        _windowHeight = window.innerHeight;
+    } else if (document.body && document.body.clientHeight) {
+        _windowHeight = document.body.clientHeight;
+    }
+
+    /**
+     * 若点击事件左偏移量加上弹窗的宽度超出视窗，则将弹出框显示在元素的左侧
+     */
+    if ((_event.pageX + _dialogWidth) >= _windowWidth) {
+        _this.left = _event.pageX - _dialogWidth;
+    }
+
+    /**
+     * 若点击事件上偏移量加上弹窗的高度超出视窗，则将弹出框显示在元素的上侧
+     */
+    if ((_event.pageY + _dialogHeight) >= _windowHeight) {
+        _this.top = _event.pageY - _dialogHeight;
+    }
 
     /**
      * 切换圈选选项

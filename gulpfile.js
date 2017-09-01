@@ -43,7 +43,7 @@ gulp.task('upload', function() {
          */
         gulp.src([
                 './dist/**/*.js',
-                './dist/**/*.css',
+                // './dist/**/*.css',
                 // './dist/**/*.html'
             ], {
                 base: '.',

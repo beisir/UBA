@@ -163,26 +163,11 @@ function circleDialog(options) {
                 type: 'category',
                 boundaryGap: false
             },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    // formatter: '{value}',
-                    /**
-                     * [formatter 格式化数据]
-                     * @param  {[type]} value [刻度数值（类目）]
-                     * @param  {[type]} index [刻度的索引]
-                     * @return {[type]}       [description]
-                     */
-                    formatter: function(value, index) {
-                        return util.ConversionPrice(value, 0);
-                    }
-                },
-                splitNumber: 2
-            },
+            yAxis: [],
             grid: {
                 x: 50,
                 x2: 40,
-                y: 20,
+                y: 32,
                 y2: 20
             },
             series: []
@@ -437,7 +422,20 @@ circleDialog.prototype.update = function() {
          * [_data 模拟数据]
          * @type {[type]}
          */
-        //_data = { "data": { "dataList": [{ "unit": "次", "data": [141565, 124, 85873, 64083, 133855, 126917, 58969], "name": "浏览量" }, { "unit": "次", "data": [14, 0, 0, 0, 6, 123, 35], "name": "点击量" }], "time": ["2017-08-24", "2017-08-25", "2017-08-26", "2017-08-27", "2017-08-28", "2017-08-29", "2017-08-30"] } };
+        // _data = {
+        //     "data": {
+        //         "dataList": [{
+        //             "unit": "次",
+        //             "data": [141565, 124, 85873, 64083, 133855, 126917, 58969],
+        //             "name": "浏览量"
+        //         }, {
+        //             "unit": "次",
+        //             "data": [121565, 104, 83873, 63083, 123855, 136917, 52969],
+        //             "name": "点击量"
+        //         }],
+        //         "time": ["2017-08-24", "2017-08-25", "2017-08-26", "2017-08-27", "2017-08-28", "2017-08-29", "2017-08-30"]
+        //     }
+        // };
         _data = _data.data || {};
 
         /**
@@ -455,14 +453,52 @@ circleDialog.prototype.update = function() {
          */
         _option.series = [];
         _option.legend.data = [];
+        _option.yAxis = [];
+        _colors = ['#c23531', '#2f4554', '#61a0a8', '#d48265', '#91c7ae', '#749f83', '#ca8622', '#bda29a', '#6e7074', '#546570', '#c4ccd3'];
         (_data.dataList || []).forEach(function(item, index) {
+
+            /**
+             * [创建数据序列]
+             * @type {[type]}
+             */
             _option.series.push({
                 name: item.name || '',
                 type: 'line',
                 smooth: true,
-                data: item.data || []
+                data: item.data || [],
+                yAxisIndex: index //指定y坐标轴
             });
+
+            /**
+             * 添加图例
+             */
             _option.legend.data.push(item.name || '');
+
+            /**
+             * [添加Y坐标轴]
+             */
+            _option.yAxis.push(Object.assign({
+                type: 'value',
+                position: ((index % 2) === 0) ? 'left' : 'right',
+                axisLabel: {
+                    /**
+                     * [formatter 格式化数据]
+                     * @param  {[type]} value [刻度数值（类目）]
+                     * @param  {[type]} index [刻度的索引]
+                     * @return {[type]}       [description]
+                     */
+                    formatter: function(value, index) {
+                        return util.ConversionPrice(value, 0);
+                    }
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: _colors[index % (_colors.length)]
+                    }
+                }
+            }, {
+                name: item.name || ''
+            }));
         });
 
         /**

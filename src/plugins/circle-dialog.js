@@ -495,6 +495,9 @@ circleDialog.prototype.update = function() {
                     lineStyle: {
                         color: _colors[index % (_colors.length)]
                     }
+                },
+                nameTextStyle:{
+                    color:'#fff'
                 }
             }, {
                 name: item.name || ''

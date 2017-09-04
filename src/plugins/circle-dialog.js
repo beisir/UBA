@@ -134,8 +134,8 @@ function circleDialog(options) {
          * @type {String}
          */
         serviceURL: {
-            get: 'http://point.hc360.com/slw/loop/',
-            save: 'http://point.hc360.com/ind/add/'
+            get: '//point.hc360.com/slw/loop/',
+            save: '//point.hc360.com/ind/add/'
         },
 
         /**

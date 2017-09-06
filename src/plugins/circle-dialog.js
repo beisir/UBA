@@ -378,7 +378,6 @@ circleDialog.prototype.update = function() {
      * [_promise 获取数据延迟对象]
      * @type {[type]}
      */
-    // _this.serviceURL.get='/ldt';
     _promise = _this.getDataPromise({
         xpath: _this.xpath,
         text: _this.text,
@@ -409,14 +408,7 @@ circleDialog.prototype.update = function() {
     /**
      * [获取到数据后显示弹出框，更新图表]
      */
-    _promise.then(function(xhr) {
-
-        /**
-         * 将数据转为JSON
-         */
-        try {
-            _data = JSON.parse(xhr.responseText || '{}');
-        } catch (e) {}
+    _promise.then(function(_data) {
 
         /**
          * [_data 模拟数据]
@@ -496,8 +488,8 @@ circleDialog.prototype.update = function() {
                         color: _colors[index % (_colors.length)]
                     }
                 },
-                nameTextStyle:{
-                    color:'#fff'
+                nameTextStyle: {
+                    color: '#fff'
                 }
             }, {
                 name: item.name || ''
@@ -548,15 +540,7 @@ circleDialog.prototype.save = function() {
     /**
      * [获取到数据后显示弹出框，更新图表]
      */
-    _promise.then(function(xhr) {
-
-        /**
-         * 将数据转为JSON
-         */
-        try {
-            _data = JSON.parse(xhr.responseText || '{}');
-        } catch (e) {}
-
+    _promise.then(function(_data) {
 
         /**
          * [判断是否保存成功]
@@ -640,7 +624,31 @@ circleDialog.prototype.getDataPromise = function(data, serviceURL) {
         _xhr.onreadystatechange = function() {
             if (_xhr.readyState === 4) {
                 if (_xhr.status === 200) {
-                    resolve(_xhr);
+                    var _ret = {};
+
+                    /**
+                     * 获取返回数据并转换为JSON
+                     */
+                    try {
+                        _ret = JSON.parse(_xhr.responseText || '{}');
+                    } catch (e) {}
+
+                    /**
+                     * [判断是否登录超时]
+                     */
+                    if (_ret.errno === -2) {
+
+                        /**
+                         * 派发弹出框关闭事件
+                         */
+                        _this.__dispatchEvent('onSessionTimeout');
+                        reject(_xhr);
+                    }
+
+                    /**
+                     * 解除延迟对象，传递返回数据
+                     */
+                    resolve(_ret);
                 } else {
                     reject(_xhr);
                 }

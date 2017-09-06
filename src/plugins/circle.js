@@ -63,6 +63,22 @@ function circle(trackerEntity) {
          */
         _this.clickOff();
     });
+
+    /**
+     * [监听登录超时事件]
+     */
+    _this.circleDialogEntity.addEventListener('onSessionTimeout', function() {
+
+        /**
+         * 移除点击元素样式
+         */
+        /**
+         * 通知父框架页圈选组件加载完成
+         */
+        _this.trackerEntity.pageEntity.postMessage({
+            action: 'sessionTimeout'
+        });
+    });
 }
 
 /**
@@ -243,7 +259,7 @@ circle.prototype.bodyMouseOutHandler = function(event) {
      * [_target 获取事件元素及元素类型]
      * @type {[type]}
      */
-    _target = _evt.target || _evt.srcElement;    
+    _target = _evt.target || _evt.srcElement;
 
     /**
      * [忽略鼠标点击弹出框]

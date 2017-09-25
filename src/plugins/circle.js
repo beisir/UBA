@@ -296,7 +296,8 @@ circle.prototype.elementClickHandler = function(event) {
         _plainTextTagNames = ['I', 'SPAN'],
         _clickableTagNames = ['A', 'BUTTON'],
         _ignoreTagNames = ["BODY", "HR", "BR", "CANVAS"],
-        _targetData;
+        _targetData,
+        _targetText;
 
     /**
      * [_target 获取事件元素及元素类型]
@@ -352,12 +353,19 @@ circle.prototype.elementClickHandler = function(event) {
         _targetData = _this.trackerEntity.pageEntity.getElementPath(_target, true);
 
         /**
+         * [_targetText 获取元素内容]
+         * @type {String}
+         */
+        _targetText = _this.trackerEntity.pageEntity.analyzeEventElementAttribute('click', _target).v;
+
+        /**
          * 展示弹出框
          */
         _this.circleDialogEntity.render({
             element: _target,
             xpath: _targetData.xpath,
-            text: _this.trackerEntity.pageEntity.getElementContent(_target),
+            // text: _this.trackerEntity.pageEntity.getElementContent(_target),
+            text: _targetText,
             index: _targetData.idx || _this.trackerEntity.pageEntity.getElementIndex(_target, _targetData.xpath),
             event: _evt
         });

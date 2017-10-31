@@ -159,7 +159,8 @@ sender.prototype.init = function() {
      * [senders 设置发送者对象]
      * @type {Array}
      */
-    _this.senders = [_this.sendByXMLHttpRequest, _this.sendByXDomainRequest, _this.sendByImage, _this.sendByFormSubmit];
+  //  _this.senders = [_this.sendByXMLHttpRequest, _this.sendByXDomainRequest, _this.sendByImage, _this.sendByFormSubmit];
+    _this.senders = [_this.sendByXMLHttpRequest,  _this.sendByImage, _this.sendByFormSubmit];
 };
 
 /**

@@ -785,23 +785,23 @@ page.prototype.getExposureNodes = function(_children) {
              * @type {Array}
              */
             var _regExpList = [
-                    /^http\:\/\/b2b.hc360.com\/supplyself\/[0-9]+.html/,
-                    /^http\:\/\/m.hc360.com\/supplyself\/[0-9]+.html/,
-                    /^http\:\/\/js.hc360.com\/supplyself\/[0-9]+.html/,
-                    /^http\:\/\/([^.]+).b2b.hc360.com/ //出于用户页面体验的问题，暂时不记录商铺链接
+                    /^(http\:\/\/|https\:\/\/|\/\/)b2b.hc360.com\/supplyself\/[0-9]+.html/,
+                    /^(http\:\/\/|https\:\/\/|\/\/)m.hc360.com\/supplyself\/[0-9]+.html/,
+                    /^(http\:\/\/|https\:\/\/|\/\/)js.hc360.com\/supplyself\/[0-9]+.html/,
+                    /^(http\:\/\/|https\:\/\/|\/\/)([^.]+).b2b.hc360.com/ //出于用户页面体验的问题，暂时不记录商铺链接
                 ],
 
                 /**
                  * [_regExpShop 匹配商铺页]
                  * @type {RegExp}
                  */
-                _regExpShop = /^http\:\/\/([^.]+).b2b.hc360.com/,
+                _regExpShop = /^(http\:\/\/|https\:\/\/|\/\/)([^.]+).b2b.hc360.com/,
 
                 /**
                  * [_regExpShopDetail 商铺终极页]
                  * @type {RegExp}
                  */
-                _regExpShopDetail = /^http\:\/\/b2b.hc360.com\/supplyself\/[0-9]+.html/,
+                _regExpShopDetail = /^(http\:\/\/|https\:\/\/|\/\/)b2b.hc360.com\/supplyself\/[0-9]+.html/,
 
                 /**
                  * [_domains 要过滤的 ***.b2b.hc360.com 二级域名列表]

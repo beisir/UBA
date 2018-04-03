@@ -23,23 +23,23 @@ var webpackConfig = merge(baseWebpackConfig, {
         chunkFilename: utils.assetsPath('js/[name].js')
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': process.env.NODE_ENV
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-                screw_ie8: false
-            },
-            output: {
-                comments: false,
-                ascii_only: true,
-                screw_ie8: false
-            },
-            mangle: {
-                screw_ie8: false
-            }
-        }),
+        // new webpack.DefinePlugin({
+        //     'process.env': process.env.NODE_ENV
+        // }),
+        // new webpack.optimize.UglifyJsPlugin({
+        //     compress: {
+        //         warnings: false,
+        //         screw_ie8: false
+        //     },
+        //     output: {
+        //         comments: false,
+        //         ascii_only: true,
+        //         screw_ie8: false
+        //     },
+        //     mangle: {
+        //         screw_ie8: false
+        //     }
+        // }),
         // extract css into its own file
         // new ExtractTextPlugin(utils.assetsPath('css/[name].[contenthash].css')),
         // generate dist index.html with correct asset hash for caching.

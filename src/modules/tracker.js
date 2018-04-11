@@ -277,7 +277,10 @@ tracker.prototype.sendPageView = function() {
             ic: util.global.navigator.cookieEnabled,
             dpi: util.global.devicePixelRatio || 0,
             ifr: _this.pageEntity.pageFrameType.type,
-            ifru: _this.pageEntity.pageFrameType.type ? _this.pageEntity.pageFrameType.url : ''
+            ifru: _this.pageEntity.pageFrameType.type ? _this.pageEntity.pageFrameType.url : '',
+            //为区分sem，高振洲需求，阿拉丁页增加特有两个参数，以区分流量
+            kw: window.requesParamsVo ? window.requesParamsVo.key : '',
+            isem: window.datap4p ? (window.datap4p == 'false' ? 1 : 0) : ''
         },
         _promise = _this.senderEntity.send(_data, 'pageview');
 

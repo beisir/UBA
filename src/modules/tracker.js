@@ -614,7 +614,7 @@ tracker.prototype.registerDOMObserver = function() {
              * [_exposureNodes 对组合后的数组就行去重，去重的原则是过滤掉链接地址相同，且路径相似度超过70%的元素]
              * @type {Array}
              */
-            _this.pageEntity.exposureNodes = _this.pageEntity.uniqueExposureNodes(_this.pageEntity.exposureNodes, 0.7);
+            // _this.pageEntity.exposureNodes = _this.pageEntity.uniqueExposureNodes(_this.pageEntity.exposureNodes, 0.7);
 
             /**
              * [将显示到当前屏幕中且未曝光的元素添加到已曝光数据集中，并设置已曝光状态属性]

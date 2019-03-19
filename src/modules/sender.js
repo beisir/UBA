@@ -170,6 +170,7 @@ sender.prototype.init = function() {
  * @return {[type]}        [description]
  */
 sender.prototype.send = function(data, actionName) {
+    // console.log(data);
     var _this = this,
         _action = _this.actionMapping[actionName] || _this.actionMapping.action,
         _ua = ua.parseUA(),
@@ -211,7 +212,7 @@ sender.prototype.send = function(data, actionName) {
     _dispatchEventArgs.dataUncompressed.t = _action;
 
     /**
-     * 压缩数据 
+     * 压缩数据
      */
     try {
 
@@ -222,7 +223,7 @@ sender.prototype.send = function(data, actionName) {
 
         //     /**
         //      * 在支持XMLHttpRequest对象的浏览器且非IE7浏览器时使用compressToUTF16压缩
-        //      * 
+        //      *
         //      * IE浏览器在IE7、IE8开始支持XMLHttpRequest对象
         //      */
         //     if (util.global.XMLHttpRequest && (parseInt(_ua.ie, 10) != 7)) {

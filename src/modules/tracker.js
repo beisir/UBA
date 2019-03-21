@@ -623,6 +623,11 @@ tracker.prototype.registerDOMObserver = function() {
                 if ((!node.exposured) && util.visible(node.n)) {
                     node.exposured = true;
                     _tempNodes.push({
+                    /** 只有终极页会有曝光值 **/
+                        m: node.m,
+                        p: node.p,
+                        i: node.i,
+                    /** 只有终极页会有曝光值 **/
                         x: node.x,
                         v: node.v,
                         h: node.h,

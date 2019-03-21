@@ -170,7 +170,7 @@ sender.prototype.init = function() {
  * @return {[type]}        [description]
  */
 sender.prototype.send = function(data, actionName) {
-    // console.log(data);
+    // console.log(data, '===============>', actionName);
     var _this = this,
         _action = _this.actionMapping[actionName] || _this.actionMapping.action,
         _ua = ua.parseUA(),

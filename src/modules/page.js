@@ -253,6 +253,10 @@ page.prototype.getElementPath = function(_element, _flag) {
              * @type {Object}
              */
             _pnodeContent = {
+                m: _elementEntity.node.getAttribute('hcbiexp') || '',
+                p: _elementEntity.node.getAttribute('hcprod') || '',
+                i: _elementEntity.node.getAttribute('hcindex') || '',
+
                 x: _node.xpath,
                 h: _elementEntity.href,
                 v: _this.getElementContent(_elementEntity.node)
@@ -750,7 +754,13 @@ page.prototype.analyzeEventElementAttribute = function(eventType, element) {
 
         }
     }
-
+    // console.log(element);
+    // console.log(element.getAttribute('hcbiexp'));
+    /**  点击事件发送新增参数  2019-03-31  **/
+    _obj.m = element.getAttribute('hcbiexp') || '';
+    _obj.p = element.getAttribute('hcprod') || '';
+    _obj.i = element.getAttribute('hcindex') || '';
+    /**  点击事件发送新增参数  2019-03-31  **/
     /**
      * [v 过滤元素内容中的空格及换行符]
      * @type {String}
@@ -778,8 +788,9 @@ page.prototype.getExposureNodes = function(_children) {
          * [_regExp 只获取商品终极页、商铺页的链接元素作为曝光数据]
          * @type {RegExp}
          */
-        _regExpMatch = function(href) {
-
+        _regExpMatch = function(attributes) {
+            attributes = attributes || {};
+            var href = attributes.href || '';
             /**
              * [_regExpList 匹配链接地址列表]
              * @type {Array}
@@ -788,7 +799,10 @@ page.prototype.getExposureNodes = function(_children) {
                     /^(http\:\/\/|https\:\/\/|\/\/)b2b.hc360.com\/supplyself\/[0-9]+.html/,
                     /^(http\:\/\/|https\:\/\/|\/\/)m.hc360.com\/supplyself\/[0-9]+.html/,
                     /^(http\:\/\/|https\:\/\/|\/\/)js.hc360.com\/supplyself\/[0-9]+.html/,
-                    /^(http\:\/\/|https\:\/\/|\/\/)([^.]+).b2b.hc360.com/ //出于用户页面体验的问题，暂时不记录商铺链接
+                    /^(http\:\/\/|https\:\/\/|\/\/)([^.]+).b2b.hc360.com/, //出于用户页面体验的问题，暂时不记录商铺链接
+
+                    /^(http\:\/\/|https\:\/\/|\/\/)m.hc360.com\/b2b\/([^.]+)\/$/,
+                    /^(http\:\/\/|https\:\/\/|\/\/)js.hc360.com\/b2b\/([^.]+)\/$/
                 ],
 
                 /**
@@ -813,6 +827,11 @@ page.prototype.getExposureNodes = function(_children) {
                  * 匹配项
                  */
                 _matches;
+
+            if (attributes.hcbiexp) {
+                return true;
+            };
+
 
             /**
              * [逐个验证URL地址]
@@ -840,9 +859,18 @@ page.prototype.getExposureNodes = function(_children) {
                     /**
                      * [忽略从商铺页或商品终极页跳转到商铺页的链接，例如商铺页和商品终极页的导航链接]
                      */
+                    // else if (_regExpShop.test(util.global.location.href) || _regExpShopDetail.test(util.global.location.href)) {
+                    //     // console.log(attributes);
+                    //     if (attributes.hcbiexp) {
+                    //         // console.log(attributes.hcbiexp);
+                    //         return true;
+                    //     }
+                    //     return false;
+                    // }
                     else if (_regExpShop.test(util.global.location.href) || _regExpShopDetail.test(util.global.location.href)) {
                         return false;
                     }
+
                 }
 
                 /**
@@ -866,14 +894,21 @@ page.prototype.getExposureNodes = function(_children) {
     /**
      * [遍历创建曝光数据集]
      */
+    // console.log(_childs);
     for (_index = 0, _length = _childs.length; _index < _length; _index++) {
         _child = _childs[_index];
 
         /**
          * [如果是叶子节点，且能匹配链接地址列表，直接添加到结果集中]
          */
-        if (_child.leaf && _regExpMatch(_child.attributes.href || '')) {
+        if (_child.leaf && _regExpMatch((_child.attributes.href && _child.attributes))) {
+        // if (_child.leaf && _regExpMatch((_child.attributes.href || ''))) {
+            var attrs = _child.attributes;
             _leafNodes.push({
+                m: attrs.hcbiexp || '',
+                p: attrs.hcprod || '',
+                i: attrs.hcindex || '',
+
                 x: _child.xpath,
                 v: util.trim(_child.text),
                 h: _this.normalizePath(_child.attributes.href),

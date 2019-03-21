@@ -43,7 +43,7 @@ __webpack_public_path__ = ('https:' == document.location.protocol ? 'https://sty
 
     /**
      * [因为电销CRM系统的部分页面脚本在引入 es5-shim 后在360浏览器兼容模式下出现各种兼容性问题，暂时屏蔽电销CRM域的数据采集]
-     * 
+     *
      * 例如：http://dxcrm.inc.hc360.com/memberReg.htm?resCode=201408161853439668368&token=TEhENEU5QUhYR1pEVDkxTzFPMzg=&sourcetypeid=18&type=0
      */
     // var _host = window.location.host;
@@ -53,7 +53,7 @@ __webpack_public_path__ = ('https:' == document.location.protocol ? 'https://sty
 
     /**
      * [因为CRM系统的部分页面脚本在引入 es5-shim 后在360浏览器兼容模式下出现各种兼容性问题，暂时屏蔽CRM域的数据采集]
-     * 
+     *
      * 例如：http://manage.vms.hc360.com/vms/infomng/signUpMsgAction!list.action
      */
     var _host = window.location.host;

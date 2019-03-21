@@ -8,7 +8,7 @@ var gulp = require('gulp'),
      * [uploadPathPrefix 上传文件路径前缀，包含测试路径环境名称，及项目目录名称]
      * @type {String}
      */
-    uploadPathPrefix = '/Virgo/Project/logrecord/',
+    uploadPathPrefix = '/Aries/Project/logrecord',
 
     /**
      * [uploadFullPath 上传文件目录网站路径]
